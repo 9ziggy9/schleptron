@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "./include/globals.h"
 
+// magic foreach construct, don't really understand how
+// this works.
 #define foreach(item, array) \
   for(int keep = 1, \
 	count = 0, \
