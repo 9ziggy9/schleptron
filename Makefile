@@ -7,4 +7,4 @@ schleptron: main.c $(OBJECTS)
 	$(CC) $(INCLUDES) $(CFLAGS) main.c -o schleptron
 
 clean:
-	rm -rf ./schleptron ./build/*
+	rm -rf ./schleptron ./build/* ./*.ppm

@@ -16,10 +16,15 @@
 	for(item = (array) + count; keep; keep = !keep)
 
 typedef float Layer[HEIGHT][WIDTH];
+
 typedef struct Rect {
   int x; int y;
   int w; int h;
 } Rect;
+
+typedef struct Circle {
+  int x; int y; int r;
+} Circle;
 
 // Assembly generated from this implementation is praticularly good.
 int clamp(int d, int min, int max) {
@@ -61,6 +66,21 @@ void layer_fill_rect(Layer layer, Rect rect, float v) {
   }
 }
 
+void layer_fill_circle(Layer layer, Circle circle, float v) {
+  assert(circle.r > 0);
+  int x0 = clamp(circle.x - circle.r, 0, WIDTH-1);
+  int y0 = clamp(circle.y - circle.r, 0, HEIGHT-1);
+  int x1 = clamp(circle.x + circle.r, 0, WIDTH-1);
+  int y1 = clamp(circle.y + circle.r, 0, HEIGHT-1);
+  for (int y = y0; y <= y1; y++) {
+    for (int x = x0; x <= x1; x++) {
+      int dx = x - circle.x;
+      int dy = y - circle.y;
+      if (dx*dx + dy*dy <= circle.r*circle.r) layer[y][x] = v;
+    }
+  }
+}
+
 //                     data           model
 float feed_forward(Layer input, Layer weights) {
   float output = 0.0f;
@@ -78,9 +98,9 @@ static Layer weights;
 int main(void) {
   float output = feed_forward(input, weights);
 
-  Rect rect = {0,0,WIDTH/2,HEIGHT/2};
-  layer_fill_rect(input, rect, 1.0f);
-  layer_build_ppm(input, "./test.ppm");
+  Circle circle = {WIDTH/4,WIDTH/4,WIDTH/4};
+  layer_fill_circle(input, circle, 1.0f);
+  layer_build_ppm(input, "./circle-test.ppm");
 
   printf("output = %f\n", output);
   return 0;
