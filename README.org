@@ -1,5 +1,8 @@
 * schleptron
 Inspired by a Tsoding stream--I was blown away by the simplicity of implementing a naive neural network and want to see if I can create something interesting from the proof of concept. Also seems like an excuse to use wasm and design an interesting visualization by interfacing C with vanilla HTML5 canvas.
+** Notes/Spec
+-- In particular we are implementing a single-layer perceptron, capable of learning linearly seperable patterns.
+-- Consists of single layer of output nodes; inputs are fed directly to the outputs via a series (array) of weights. The sum of the products of the weights and the inputs it calculate for each node, and if the value is above some threshold (bias), the neuron fires and takes the activated value (typically 1); otherwise it takes the deactivated value (typically -1). Activated/deactivated values are output of activation function? Activation function is the thing which should be implemented via a sigmoid/logistic/step function, etc. We may try a few approaches.
 ** TODOS
 -- Makefile, generate PPMs for debugging, browser will be inconvenient at first so wasm is a final step.
 -- Implement random shape generator. I might diverge from PPM as format and arrays of hex sprites. Want at least three shapes, triangle, circle, rect.
