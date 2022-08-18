@@ -1,5 +1,5 @@
 INCLUDES=-I ./include
-CFLAGS=-Wall -ggdb -std=c11 -pedantic
+CFLAGS=-Wall -ggdb -std=c11 -pedantic -lm
 
 all: schleptron
 

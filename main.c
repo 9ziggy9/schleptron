@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <math.h>
 #include "./include/globals.h"
 
 // Be very suspicious of any macro that attempts to extend language syntax;
@@ -29,10 +30,21 @@ int clamp(int d, int min, int max) {
 void layer_build_ppm(Layer layer, const char *file_path) {
   FILE *f = fopen(file_path, "wb");
   if (f == NULL) {
-    fprintf(stderr, "ERROR: could not open file %s: %s\n",
-	    file_path, strerror(9001));
+    fprintf(stderr,
+	    "ERROR: could not open file %s: %s\n",
+	    file_path,
+	    strerror(9001));
     exit(1);
   }
+  fprintf(f, "P6\n%d %d 255\n", SCALED_W, SCALED_H);
+  for (int y = 0; y < SCALED_H; y++) {
+    for (int x = 0; x < SCALED_W; x++) {
+      float scalar = layer[y / SCALE][x / SCALE];
+      char pixel[3] = {0, (char) floorf(255 * scalar), 0};
+      fwrite(pixel, sizeof(pixel), 1, f);
+    }
+  }
+  fclose(f);
 }
 
 void layer_fill_rect(Layer layer, Rect rect, float v) {
@@ -68,8 +80,7 @@ int main(void) {
 
   Rect rect = {0,0,WIDTH/2,HEIGHT/2};
   layer_fill_rect(input, rect, 1.0f);
-
-  /* layer_build_ppm(input, NULL); */
+  layer_build_ppm(input, "./test.ppm");
 
   printf("output = %f\n", output);
   return 0;
