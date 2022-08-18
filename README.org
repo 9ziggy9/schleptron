@@ -1,0 +1,14 @@
+* schleptron
+Inspired by a Tsoding stream--I was blown away by the simplicity of implementing a naive neural network and want to see if I can create something interesting from the proof of concept. Also seems like an excuse to use wasm and design an interesting visualization by interfacing C with vanilla HTML5 canvas.
+** TODOS
+-- Makefile, generate PPMs for debugging, browser will be inconvenient at first so wasm is a final step.
+-- Implement random shape generator. I might diverge from PPM as format and arrays of hex sprites. Want at least three shapes, triangle, circle, rect.
+-- Rather than clamping to handle boundary input, apply sigmoids, although I don't know much now other than it seems the step function is a limiting case.
+-- How do I derive a mathematically acceptable bias? I am intrigued by the mathematical aspects of the problem as well.
+** References
+- https://en.wikipedia.org/wiki/Perceptron
+- https://en.wikipedia.org/wiki/Sigmoid_function
+- https://en.wikipedia.org/wiki/Logistic_function#In_statistics_and_machine_learning
+- https://en.wikipedia.org/wiki/Activation_function
+- https://en.wikipedia.org/wiki/Linear_separability#Linear_separability_of_Boolean_functions_in_n_variables
+- https://en.wikipedia.org/wiki/Backpropagation
