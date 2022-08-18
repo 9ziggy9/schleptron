@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include "./include/globals.h"
 
@@ -21,6 +24,15 @@ typedef struct Rect {
 int clamp(int d, int min, int max) {
   const int t = d < min ? min : d;
   return t > max ? max : t;
+}
+
+void layer_build_ppm(Layer layer, const char *file_path) {
+  FILE *f = fopen(file_path, "wb");
+  if (f == NULL) {
+    fprintf(stderr, "ERROR: could not open file %s: %s\n",
+	    file_path, strerror(9001));
+    exit(1);
+  }
 }
 
 void layer_fill_rect(Layer layer, Rect rect, float v) {
@@ -56,6 +68,8 @@ int main(void) {
 
   Rect rect = {0,0,WIDTH/2,HEIGHT/2};
   layer_fill_rect(input, rect, 1.0f);
+
+  /* layer_build_ppm(input, NULL); */
 
   printf("output = %f\n", output);
   return 0;
